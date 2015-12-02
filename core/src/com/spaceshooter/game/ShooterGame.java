@@ -9,17 +9,23 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class ShooterGame extends ApplicationAdapter {
+	public static final int SCREEN_HEIGHT = 480;
+	public static final int SCREEN_WIDTH = 800;
+	
 	private SpriteBatch batch;
 	private Texture background;
 	private OrthographicCamera camera;
 	//private Sprite spaceshipSprite;
+	
 	private AnimatedSprite spaceshipAnimated;
+	private ShotManager shotManager;
+	
 	
 	@Override
 	public void create () {
 		
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 480); // force rescaling so that the background covers the entire screen.
+		camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT); // force rescaling so that the background covers the entire screen.
 		
 		batch = new SpriteBatch();
 		background = new Texture(Gdx.files.internal("space-background.png")); // load the background.
@@ -30,6 +36,9 @@ public class ShooterGame extends ApplicationAdapter {
 		
 		spaceshipAnimated = new AnimatedSprite(spaceshipSprite);
 		spaceshipAnimated.setPosition(background.getWidth() / 2, 0);
+		
+		Texture shotTexture = new Texture(Gdx.files.internal("projectile-spritesheet.png"));
+		shotManager = new ShotManager(shotTexture);
 	}
 
 	@Override
@@ -41,7 +50,29 @@ public class ShooterGame extends ApplicationAdapter {
 	    batch.begin();
 		batch.draw(background,0,0);
 		spaceshipAnimated.draw(batch);
+		shotManager.draw(batch);
 		batch.end();
+		
+		handleInput(); // handle the user input .
+		
+		spaceshipAnimated.move(); // now move the animated sprite based on the user input values.
+		shotManager.update();
+	}
+
+	private void handleInput() {
+		if (Gdx.input.isTouched()) 
+		{
+			int xTouch = Gdx.input.getX();
+			if(xTouch > spaceshipAnimated.getX())
+			{
+				spaceshipAnimated.moveRight(); // move right if the user input's x coordinate is greater than spaceship's coordinate.
+			}
+			else {
+				spaceshipAnimated.moveLeft(); // mover left otherwise.
+			}
+			
+			shotManager.firePlayerShot(spaceshipAnimated.getX());
+		}
 	}
 	
 }
