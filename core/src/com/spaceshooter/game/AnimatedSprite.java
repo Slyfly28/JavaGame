@@ -103,4 +103,8 @@ public class AnimatedSprite {
 	{
 		this.velocity = velocity;
 	}
+
+	public int getY() {
+		return (int) sprite.getY();
+	}
 }
