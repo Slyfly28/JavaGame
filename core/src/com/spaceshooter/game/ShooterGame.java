@@ -2,6 +2,7 @@ package com.spaceshooter.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,6 +22,7 @@ public class ShooterGame extends ApplicationAdapter {
 	
 	private AnimatedSprite spaceshipAnimated;
 	private ShotManager shotManager;
+	private Music gameMusic;
 	
 	
 	@Override
@@ -41,6 +43,12 @@ public class ShooterGame extends ApplicationAdapter {
 		
 		Texture shotTexture = new Texture(Gdx.files.internal("projectile-spritesheet.png"));
 		shotManager = new ShotManager(shotTexture);
+		
+		gameMusic = Gdx.audio.newMusic(Gdx.files.internal("game_background.wav")); // load up the music to be played.
+		gameMusic.setVolume(.25f); // set the volume to quarter of the original volume.
+		gameMusic.setLooping(true); // true to keep the music looping.
+		gameMusic.play(); // play the music.
+		
 	}
 
 	@Override

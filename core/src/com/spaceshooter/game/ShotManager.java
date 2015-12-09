@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,6 +19,7 @@ public class ShotManager {
 	private Texture shotTexture;
 	private List<AnimatedSprite> shots = new ArrayList<AnimatedSprite>();
 	private float timeSinceLastShot = 0;
+	private Sound laser = Gdx.audio.newSound(Gdx.files.internal("laser.wav")); // load up the sound to be used when firing shots.
 
 	public ShotManager(Texture shotTexture) {
 		
@@ -36,6 +38,7 @@ public class ShotManager {
 			newShotAnimated.setVelocity(new Vector2(0,SHOT_SPEED)); // setting the speed of the shot.
 			shots.add(newShotAnimated); // add every shot to list for easy deallocation of memory.
 			timeSinceLastShot = 0f;
+			laser.play(); // plays every time a shot is fired.
 		}
 	}
 
