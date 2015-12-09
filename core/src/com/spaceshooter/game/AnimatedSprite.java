@@ -107,4 +107,14 @@ public class AnimatedSprite {
 	public int getY() {
 		return (int) sprite.getY();
 	}
+
+	public int getWidth() {
+		
+		return (int) getSpriteWidth();
+	}
+
+	public int getHeight() {
+		
+		return (int) (sprite.getHeight() / FRAMES_ROW);
+	}
 }

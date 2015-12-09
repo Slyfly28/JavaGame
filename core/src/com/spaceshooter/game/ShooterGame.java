@@ -24,6 +24,8 @@ public class ShooterGame extends ApplicationAdapter {
 	private ShotManager shotManager;
 	private Music gameMusic;
 	
+	private Enemy enemy;
+	
 	
 	@Override
 	public void create () {
@@ -44,6 +46,9 @@ public class ShooterGame extends ApplicationAdapter {
 		Texture shotTexture = new Texture(Gdx.files.internal("projectile-spritesheet.png"));
 		shotManager = new ShotManager(shotTexture);
 		
+		Texture enemyTexture = new Texture(Gdx.files.internal("ufo-spritesheet.png"));
+		enemy = new Enemy(enemyTexture);
+		
 		gameMusic = Gdx.audio.newMusic(Gdx.files.internal("game_background.wav")); // load up the music to be played.
 		gameMusic.setVolume(.25f); // set the volume to quarter of the original volume.
 		gameMusic.setLooping(true); // true to keep the music looping.
@@ -60,6 +65,7 @@ public class ShooterGame extends ApplicationAdapter {
 	    batch.begin();
 		batch.draw(background,0,0);
 		spaceshipAnimated.draw(batch);
+		enemy.draw(batch);
 		shotManager.draw(batch);
 		batch.end();
 		
